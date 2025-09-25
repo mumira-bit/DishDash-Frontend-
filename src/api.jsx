@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:5555";
 export async function fetchWithCreds(url, options = {}) {
   try {
     const res = await fetch(BASE_URL + url, {
-      credentials: "include", // important for session cookies
+      credentials: "include", 
       headers: { "Content-Type": "application/json" },
       ...options,
     });

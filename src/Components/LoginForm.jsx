@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-function LoginForm({ onSwitchToSignup }) {
+export default function LoginForm({ onSwitchToSignup }) {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,8 +9,9 @@ function LoginForm({ onSwitchToSignup }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await login(email, password);
-    if (data.error) setError(data.error);
+    // Replace with actual API call
+    if (!email || !password) return setError("Please fill all fields");
+    login({ username: email });
   };
 
   return (
@@ -21,9 +22,11 @@ function LoginForm({ onSwitchToSignup }) {
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">Login</button>
       <p>
-        Don't have an account? <span onClick={onSwitchToSignup} style={{ cursor: "pointer", color: "blue" }}>Signup</span>
+        Don't have an account?{" "}
+        <span onClick={onSwitchToSignup} style={{ cursor: "pointer", color: "blue" }}>
+          Signup
+        </span>
       </p>
     </form>
   );
 }
-export default LoginForm

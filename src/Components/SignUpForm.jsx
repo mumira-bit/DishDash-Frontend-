@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-function SignUpForm({ onSwitchToLogin }) {
-  const { signup } = useAuth();
+export default function SignUpForm({ onSwitchToLogin }) {
+  const { login } = useAuth(); // For simplicity, login user after signup
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const data = await signup(username, email, password);
-    if (data.error) setError(data.error);
+    if (!username || !email || !password) return setError("Please fill all fields");
+    login({ username }); // Simulate signup
   };
 
   return (
@@ -23,9 +23,11 @@ function SignUpForm({ onSwitchToLogin }) {
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit">Signup</button>
       <p>
-        Already have an account? <span onClick={onSwitchToLogin} style={{ cursor: "pointer", color: "blue" }}>Login</span>
+        Already have an account?{" "}
+        <span onClick={onSwitchToLogin} style={{ cursor: "pointer", color: "blue" }}>
+          Login
+        </span>
       </p>
     </form>
   );
 }
-export default SignUpForm

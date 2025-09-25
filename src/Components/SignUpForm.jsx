@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
 export default function SignUpForm({ onSwitchToLogin }) {
-  const { login } = useAuth(); // For simplicity, login user after signup
+  const { login } = useAuth(); 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +11,7 @@ export default function SignUpForm({ onSwitchToLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!username || !email || !password) return setError("Please fill all fields");
-    login({ username }); // Simulate signup
+    login({ username }); 
   };
 
   return (

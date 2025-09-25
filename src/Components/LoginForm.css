@@ -1,3 +1,14 @@
+body {
+  background-color: #fdf6e3;
+  color: #333;
+
+  /* Flex centering for all content */
+  display: flex;
+  flex-direction: column; /* stack items vertically */
+  justify-content: flex-start; /* vertical centering */
+  align-items: center; /* horizontal centering */
+  min-height: 10vh; /* ensure it fills the viewport */
+}
 .auth-container {
   display: flex;
   justify-content: center;

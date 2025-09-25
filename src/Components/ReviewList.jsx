@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReviewCard from "./ReviewCard";
 
-export default function ReviewList({ recipeId }) {
+ function ReviewList({ recipeId }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -32,3 +32,4 @@ export default function ReviewList({ recipeId }) {
     </div>
   );
 }
+export default ReviewList

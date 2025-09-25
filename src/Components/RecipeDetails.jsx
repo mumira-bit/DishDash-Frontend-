@@ -2,7 +2,7 @@ import React from "react";
 import ReviewList from "./ReviewList";
 import ReviewForm from "./ReviewForm";
 
-export default function RecipeDetail({ recipe, onBack }) {
+function RecipeDetail({ recipe, onBack }) {
   return (
     <div style={{ padding: "1rem" }}>
       <button onClick={onBack}>Back</button>
@@ -16,3 +16,4 @@ export default function RecipeDetail({ recipe, onBack }) {
     </div>
   );
 }
+export default RecipeDetail

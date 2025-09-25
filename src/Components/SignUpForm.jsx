@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-export default function SignUpForm({ onSwitchToLogin }) {
+function SignUpForm({ onSwitchToLogin }) {
   const { signup } = useAuth();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -28,3 +28,4 @@ export default function SignUpForm({ onSwitchToLogin }) {
     </form>
   );
 }
+export default SignUpForm

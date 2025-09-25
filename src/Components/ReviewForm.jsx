@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { fetchWithCreds } from "../api";
 import { useAuth } from "./AuthContext";
 
-export default function ReviewForm({ recipeId }) {
+ function ReviewForm({ recipeId }) {
   const { user } = useAuth();
   const [rating, setRating] = useState("");
   const [comment, setComment] = useState("");
@@ -25,4 +25,5 @@ export default function ReviewForm({ recipeId }) {
       <button type="submit">Submit Review</button>
     </form>
   );
-}
+} 
+export default ReviewForm

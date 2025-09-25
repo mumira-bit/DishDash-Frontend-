@@ -5,7 +5,7 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // Optional: check session on mount
+  
   useEffect(() => {
     fetch("http://localhost:5555/check_session", {
       credentials: "include"

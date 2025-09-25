@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { fetchWithCreds } from "../api";
 import { useAuth } from "./AuthContext";
 
-export default function RecipeForm() {
+ function RecipeForm() {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [instructions, setInstructions] = useState("");
@@ -32,3 +32,4 @@ export default function RecipeForm() {
     </form>
   );
 }
+export default RecipeForm

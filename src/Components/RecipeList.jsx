@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import RecipeDetails from "./RecipeDetails";
 import { fetchWithCreds } from "../api"; // <- correct path
 
-export default function RecipeList() {
+function RecipeList() {
   const [recipes, setRecipes] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
 
@@ -35,3 +35,4 @@ export default function RecipeList() {
     </div>
   );
 }
+export default RecipeList

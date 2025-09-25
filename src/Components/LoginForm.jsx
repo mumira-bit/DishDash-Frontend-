@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
+import "./LoginForm.css"
 
 export default function LoginForm({ onSwitchToSignup }) {
   const { login } = useAuth();
@@ -9,7 +10,7 @@ export default function LoginForm({ onSwitchToSignup }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Replace with actual API call
+    
     if (!email || !password) return setError("Please fill all fields");
     login({ username: email });
   };

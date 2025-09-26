@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5002"; 
+const BASE_URL = "https://dishdash-7lzx.onrender.com/"; 
 
 export async function fetchWithCreds(url, options = {}) {
   try {

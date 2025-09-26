@@ -6,7 +6,7 @@ function RecipeCard({ recipe, onViewDetails }) {
       onViewDetails(recipe);
     }
   };
-
+ ///anything
   return (
     <div style={{
       border: "1px solid #ddd",
@@ -26,8 +26,6 @@ function RecipeCard({ recipe, onViewDetails }) {
       e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
     }}>
       <h3 style={{
-        fontSize: "1.125rem",
-        fontWeight: "bold",
         marginBottom: "0.5rem",
         color: "#333"
       }}>

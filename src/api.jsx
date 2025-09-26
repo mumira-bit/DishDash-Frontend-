@@ -21,9 +21,9 @@ export async function fetchWithCreds(url, options = {}) {
 }
 
 export const recipeAPI = {
+  // --- Recipes ---
   getAllRecipes: () => fetchWithCreds("/recipes"),
   getRecipe: (id) => fetchWithCreds(`/recipes/${id}`),
-  getRecipeReviews: (id) => fetchWithCreds(`/recipes/${id}/reviews`),
   createRecipe: (recipeData) => fetchWithCreds("/recipes", {
     method: "POST",
     body: JSON.stringify(recipeData)
@@ -34,5 +34,21 @@ export const recipeAPI = {
   }),
   deleteRecipe: (id) => fetchWithCreds(`/recipes/${id}`, {
     method: "DELETE"
-  })
+  }),
+
+  // --- Reviews ---
+  getRecipeReviews: (recipeId) => fetchWithCreds(`/recipes/${recipeId}/reviews`),
+  createReview: (recipeId, reviewData) => fetchWithCreds(`/recipes/${recipeId}/reviews`, {
+    method: "POST",
+    body: JSON.stringify(reviewData)
+  }),
+  updateReview: (reviewId, reviewData) => fetchWithCreds(`/reviews/${reviewId}`, {
+    method: "PATCH",
+    body: JSON.stringify(reviewData)
+  }),
+  deleteReview: (reviewId) => fetchWithCreds(`/reviews/${reviewId}`, {
+    method: "DELETE"
+  }),
 };
+
+

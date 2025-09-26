@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5555";
+const BASE_URL = "http://localhost:5002"; 
 
 export async function fetchWithCreds(url, options = {}) {
   try {
@@ -19,3 +19,20 @@ export async function fetchWithCreds(url, options = {}) {
     throw err;
   }
 }
+
+export const recipeAPI = {
+  getAllRecipes: () => fetchWithCreds("/recipes"),
+  getRecipe: (id) => fetchWithCreds(`/recipes/${id}`),
+  getRecipeReviews: (id) => fetchWithCreds(`/recipes/${id}/reviews`),
+  createRecipe: (recipeData) => fetchWithCreds("/recipes", {
+    method: "POST",
+    body: JSON.stringify(recipeData)
+  }),
+  updateRecipe: (id, recipeData) => fetchWithCreds(`/recipes/${id}`, {
+    method: "PATCH", 
+    body: JSON.stringify(recipeData)
+  }),
+  deleteRecipe: (id) => fetchWithCreds(`/recipes/${id}`, {
+    method: "DELETE"
+  })
+};

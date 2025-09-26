@@ -1,33 +1,47 @@
-import React, { useState } from "react";
-import { useAuth } from "./AuthContext";
+import React from "react";
+import RecipeCard from "./RecipeCard";
 
-export default function SignUpForm({ onSwitchToLogin }) {
-  const { login } = useAuth(); 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+const dummyRecipes = [
+  { id: 1, title: "Spaghetti Bolognese", description: "Classic Italian pasta with rich meat sauce" },
+  { id: 2, title: "Chicken Curry", description: "Spicy and creamy curry with tender chicken" },
+  { id: 3, title: "Caesar Salad", description: "Fresh romaine with parmesan and croutons" },
+  { id: 4, title: "Beef Stir Fry", description: "Quick and easy stir fry with vegetables" },
+  { id: 5, title: "Chocolate Cake", description: "Decadent chocolate cake with rich frosting" },
+  { id: 6, title: "Fish Tacos", description: "Grilled fish with fresh salsa and lime" },
+];
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!username || !email || !password) return setError("Please fill all fields");
-    login({ username }); 
-  };
-
+function RecipeList({ onViewDetails }) {
   return (
-    <form onSubmit={handleSubmit} style={{ padding: "1rem", maxWidth: "300px" }}>
-      <h2>Sign Up</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <input placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit">Signup</button>
-      <p>
-        Already have an account?{" "}
-        <span onClick={onSwitchToLogin} style={{ cursor: "pointer", color: "blue" }}>
-          Login
-        </span>
-      </p>
-    </form>
+    <div style={{
+      maxWidth: "1200px",
+      margin: "2rem auto",
+      padding: "0 1rem"
+    }}>
+      <h1 style={{
+        fontSize: "2rem",
+        fontWeight: "bold",
+        textAlign: "center",
+        marginBottom: "2rem",
+        color: "#333"
+      }}>
+        Browse Recipes
+      </h1>
+      
+      <div style={{
+        display: "grid",
+        gap: "1.5rem",
+        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))"
+      }}>
+        {dummyRecipes.map((recipe) => (
+          <RecipeCard 
+            key={recipe.id} 
+            recipe={recipe} 
+            onViewDetails={onViewDetails}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
+
+export default RecipeList;

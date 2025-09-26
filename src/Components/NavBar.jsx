@@ -1,51 +1,131 @@
 import React from "react";
 import { useAuth } from "./AuthContext";
 
-export default function NavBar() {
+export default function NavBar({ onNavigate }) {
   const { user, logout } = useAuth();
 
+  const handleNavigation = (page) => {
+    if (onNavigate) {
+      onNavigate(page);
+    }
+  };
+
   return (
-  <nav
-    style={{
+    <nav style={{ 
+      padding: "1rem", 
+      borderBottom: "1px solid #ccc",
+      backgroundColor: "#f8f9fa",
       display: "flex",
       alignItems: "center",
-      justifyContent: "space-between",
-      padding: "1rem 2rem",
-      backgroundColor: "#ff6f61",
-      color: "#fff",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
-      borderRadius: "0 0 10px 10px",
-      fontFamily: "Arial, sans-serif",
-    }}
-  >
-    <div style={{ fontWeight: "bold", fontSize: "1.5rem" }}>DishDash</div>
-
-    <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+      gap: "1rem"
+    }}>
+      <button 
+        onClick={() => handleNavigation('home')}
+        style={{ 
+          marginRight: "1rem", 
+          fontWeight: "bold", 
+          textDecoration: "none", 
+          color: "#007bff",
+          fontSize: "1.2rem",
+          background: "none",
+          border: "none",
+          cursor: "pointer"
+        }}
+      >
+        🍳 DishDash
+      </button>
+      
       {user ? (
         <>
-          <span style={{ fontWeight: "500" }}>Hello, {user.username}</span>
-          <button
+          <button 
+            onClick={() => handleNavigation('recipes')}
+            style={{ 
+              textDecoration: "none", 
+              color: "#007bff",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              background: "none",
+              border: "none",
+              cursor: "pointer"
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = "#e9ecef"}
+            onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
+          >
+            Browse Recipes
+          </button>
+          <button 
+            onClick={() => handleNavigation('create-recipe')}
+            style={{ 
+              textDecoration: "none", 
+              color: "#007bff",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              background: "none",
+              border: "none",
+              cursor: "pointer"
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = "#e9ecef"}
+            onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
+          >
+            Create Recipe
+          </button>
+          
+          <span style={{ marginLeft: "auto", marginRight: "1rem" }}>
+            Hello, {user.username}!
+          </span>
+          <button 
             onClick={logout}
             style={{
               padding: "0.5rem 1rem",
-              borderRadius: "5px",
+              backgroundColor: "#dc3545",
+              color: "white",
               border: "none",
-              cursor: "pointer",
-              backgroundColor: "#fff",
-              color: "#c91b1bff",
-              fontWeight: "bold",
-              transition: "all 0.2s",
+              borderRadius: "4px",
+              cursor: "pointer"
             }}
-          
           >
             Logout
           </button>
         </>
       ) : (
-        <span style={{ fontStyle: "italic" }}>Discover your taste</span>
+        <>
+          <span style={{ marginLeft: "auto", marginRight: "1rem" }}>
+            Discover your taste ~
+          </span>
+          <button 
+            onClick={() => handleNavigation('login')}
+            style={{ 
+              textDecoration: "none", 
+              color: "#007bff",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              background: "none",
+              border: "none",
+              cursor: "pointer"
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = "#e9ecef"}
+            onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
+          >
+            Login
+          </button>
+          <button 
+            onClick={() => handleNavigation('signup')}
+            style={{ 
+              textDecoration: "none", 
+              color: "#007bff",
+              padding: "0.5rem",
+              borderRadius: "4px",
+              background: "none",
+              border: "none",
+              cursor: "pointer"
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = "#e9ecef"}
+            onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
+          >
+            Sign Up
+          </button>
+        </>
       )}
-    </div>
-  </nav>
-);
-
+    </nav>
+  );
 }

@@ -1,19 +1,9 @@
-body {
-  background-color: #fdf6e3;
-  color: #333;
-
-  /* Flex centering for all content */
-  display: flex;
-  flex-direction: column; /* stack items vertically */
-  justify-content: flex-start; /* vertical centering */
-  align-items: center; /* horizontal centering */
-  min-height: 10vh; /* ensure it fills the viewport */
-}
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 90vh;
+  background-color: #fdf6e3;
 }
 
 .auth-form {
@@ -25,15 +15,55 @@ body {
   max-width: 400px;
 }
 
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
 .auth-form input {
   width: 100%;
   padding: 12px;
   margin: 10px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .auth-form button {
   width: 100%;
   margin-top: 12px;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-form button:hover {
+  background-color: #0056b3;
+}
+
+.auth-form .error-message {
+  color: red;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.auth-form .switch-auth {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.auth-form .switch-auth span {
+  color: #007bff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-form .switch-auth span:hover {
+  text-decoration: underline;
 }

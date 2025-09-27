@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-export default function LoginForm({ onSwitchToSignup, onNavigate }) {
+export default function LoginForm({ onNavigate }) {
   const { login } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -9,47 +9,31 @@ export default function LoginForm({ onSwitchToSignup, onNavigate }) {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    if (e) e.preventDefault();
-    
+    e.preventDefault();
+
     if (!username || !password) {
-      setError("Please fill all fields");
+      setError("Please fill in all fields");
       return;
     }
-    
+
     setLoading(true);
     setError("");
-    
-    try {
-      console.log('Attempting login with:', { username, password });
-      
-      const response = await fetch("http://localhost:5002/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password })
-      });
 
-      if (response.ok) {
-        const userData = await response.json();
-        console.log('Login successful:', userData);
-        
-        // Update auth context
-        login(userData);
-        
-        // Navigate to home
-        if (onNavigate) onNavigate('home');
+    try {
+      // Use login from AuthContext
+      const result = await login(username, password);
+
+      if (result.success) {
+        console.log("Login successful!");
+        if (onNavigate) onNavigate("home"); // Navigate to home
       } else {
-        const errorData = await response.json();
-        console.log('Login failed:', errorData);
-        setError(errorData.message || 'Login failed');
+        setError(result.error || "Login failed");
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      setError('Network error - make sure backend is running');
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Network error. Please try again.");
     }
-    
+
     setLoading(false);
   };
 
@@ -69,14 +53,10 @@ export default function LoginForm({ onSwitchToSignup, onNavigate }) {
         width: "100%",
         maxWidth: "400px"
       }}>
-        <h2 style={{
-          textAlign: "center",
-          marginBottom: "1.5rem",
-          color: "#333"
-        }}>
+        <h2 style={{ textAlign: "center", marginBottom: "1.5rem", color: "#333" }}>
           Login
         </h2>
-        
+
         {error && (
           <div style={{
             backgroundColor: "#fee",
@@ -90,24 +70,11 @@ export default function LoginForm({ onSwitchToSignup, onNavigate }) {
             {error}
           </div>
         )}
-        
-        <div style={{
-          backgroundColor: "#e3f2fd",
-          padding: "0.75rem",
-          borderRadius: "4px",
-          marginBottom: "1rem",
-          fontSize: "0.9rem",
-          color: "#1976d2"
-        }}>
-          <strong>Test Account:</strong><br/>
-          Username: testuser<br/>
-          Password: password123
-        </div>
-        
-        <input 
+
+        <input
           type="text"
-          placeholder="Username" 
-          value={username} 
+          placeholder="Username"
+          value={username}
           onChange={(e) => setUsername(e.target.value)}
           disabled={loading}
           style={{
@@ -119,10 +86,11 @@ export default function LoginForm({ onSwitchToSignup, onNavigate }) {
             boxSizing: "border-box"
           }}
         />
-        <input 
-          type="password" 
-          placeholder="Password" 
-          value={password} 
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={loading}
           style={{
@@ -134,7 +102,8 @@ export default function LoginForm({ onSwitchToSignup, onNavigate }) {
             boxSizing: "border-box"
           }}
         />
-        <button 
+
+        <button
           onClick={handleSubmit}
           disabled={loading}
           style={{
@@ -152,22 +121,18 @@ export default function LoginForm({ onSwitchToSignup, onNavigate }) {
         >
           {loading ? "Logging in..." : "Login"}
         </button>
-        
-        <div style={{
-          textAlign: "center",
-          marginTop: "1rem"
-        }}>
+
+        <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <p>
             Don't have an account?{" "}
-            <span 
-              onClick={onSwitchToSignup || (() => onNavigate && onNavigate('signup'))}
+            <span
+              onClick={() => onNavigate && onNavigate("signup")}
               style={{
                 color: "#007bff",
                 cursor: "pointer",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                textDecoration: "underline"
               }}
-              onMouseOver={(e) => e.target.style.textDecoration = "underline"}
-              onMouseOut={(e) => e.target.style.textDecoration = "none"}
             >
               Sign Up
             </span>

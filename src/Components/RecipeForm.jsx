@@ -34,7 +34,7 @@ function RecipeForm({ onClose, onNavigate }) {
     try {
       console.log('Creating recipe:', { title, instructions, prep_time: prepTimeNum });
       
-      const response = await fetch("http://localhost:5002/recipes", {
+      const response = await fetch("https://dishdash-7lzx.onrender.com/recipes", {
         method: "POST",
         credentials: "include",
         headers: {

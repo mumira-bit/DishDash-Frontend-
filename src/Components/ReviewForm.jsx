@@ -27,7 +27,7 @@ function ReviewForm({ recipeId, onReviewSubmitted, onCancel }) {
     try {
       console.log('Submitting review:', { rating, comment, recipeId });
       
-      const response = await fetch(`http://localhost:5002/recipes/${recipeId}/reviews`, {
+      const response = await fetch(`https://dishdash-7lzx.onrender.com/recipes/${recipeId}/reviews`, {
         method: "POST",
         credentials: "include",
         headers: {

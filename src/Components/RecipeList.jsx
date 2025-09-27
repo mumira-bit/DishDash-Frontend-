@@ -13,7 +13,7 @@ function RecipeList({ onViewDetails }) {
   const fetchRecipes = async () => {
     try {
       console.log('Fetching recipes from backend...');
-      const response = await fetch("http://localhost:5002/recipes", {
+      const response = await fetch("https://dishdash-7lzx.onrender.com/recipes", {
         credentials: "include",
         headers: {
           'Content-Type': 'application/json',

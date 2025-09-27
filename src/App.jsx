@@ -6,17 +6,17 @@ import SignUpForm from "./Components/SignUpForm";
 import RecipeList from "./Components/RecipeList";
 import RecipeDetail from "./Components/RecipeDetail";
 import RecipeForm from "./Components/RecipeForm";
-import { AuthProvider } from "./Components/AuthContext";
+import { AuthProvider, useAuth } from "./Components/AuthContext";
 import "./App.css";
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+function AppContent() {
+  const [currentPage, setCurrentPage] = useState("home");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
-  const [user, setUser] = useState(null);
+  const { user, logout, setUser } = useAuth();
 
+  // Check session on load
   useEffect(() => {
-    // Check for existing session - in production this would call your backend
-    fetch("http://localhost:5002/check_session", {
+    fetch("https://dishdash-7lzx.onrender.com/check_session", {
       credentials: "include",
     })
       .then((res) => {
@@ -25,40 +25,36 @@ export default function App() {
       })
       .then((data) => setUser(data))
       .catch(() => setUser(null));
-  }, []);
-
-  const handleLogout = () => {
-    fetch("http://localhost:5002/logout", {
-      method: "DELETE",
-      credentials: "include",
-    }).then(() => setUser(null));
-  };
+  }, [setUser]);
 
   const handleNavigate = (page) => {
     setCurrentPage(page);
-    if (page !== 'detail') {
-      setSelectedRecipe(null);
-    }
+    if (page !== "detail") setSelectedRecipe(null);
   };
 
   const handleViewRecipe = (recipe) => {
     setSelectedRecipe(recipe);
-    setCurrentPage('detail');
+    setCurrentPage("detail");
   };
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'home':
+      case "home":
         return <HomePage onNavigate={handleNavigate} />;
-      case 'login':
+      case "login":
         return <LoginForm onNavigate={handleNavigate} />;
-      case 'signup':
+      case "signup":
         return <SignUpForm onNavigate={handleNavigate} />;
-      case 'recipes':
+      case "recipes":
         return <RecipeList onViewDetails={handleViewRecipe} />;
-      case 'detail':
-        return <RecipeDetail recipe={selectedRecipe} onBack={() => handleNavigate('recipes')} />;
-      case 'create-recipe':
+      case "detail":
+        return (
+          <RecipeDetail
+            recipe={selectedRecipe}
+            onBack={() => handleNavigate("recipes")}
+          />
+        );
+      case "create-recipe":
         return <RecipeForm onNavigate={handleNavigate} />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
@@ -66,11 +62,31 @@ export default function App() {
   };
 
   return (
-    <AuthProvider value={{ user, logout: handleLogout }}>
-      <div className="app">
-        <NavBar onNavigate={handleNavigate} />
-        {renderPage()}
-      </div>
+    <div className="app">
+      <NavBar onNavigate={handleNavigate} user={user} logout={logout} />
+      {renderPage()}
+    </div>
+  );
+}
+
+export default function App() {
+  const [user, setUser] = useState(null);
+
+  const logout = async () => {
+    try {
+      await fetch("https://dishdash-7lzx.onrender.com/logout", {
+        method: "DELETE",
+        credentials: "include",
+      });
+      setUser(null);
+    } catch {
+      setUser(null);
+    }
+  };
+
+  return (
+    <AuthProvider value={{ user, setUser, logout }}>
+      <AppContent />
     </AuthProvider>
   );
 }

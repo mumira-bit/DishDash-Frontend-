@@ -1,7 +1,7 @@
 # DishDash Frontend
 
 This is the **frontend React application** for DishDash, a recipe-sharing app.  
-It connects to the backend API deployed on [Render](https://dishdash-3ofz.onrender.com.)
+It connects to the backend API deployed on https://dishdash-3ofz.onrender.com.
 
 ---
 
